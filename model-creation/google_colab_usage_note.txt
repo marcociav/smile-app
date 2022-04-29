@@ -1,0 +1,5 @@
+Follow this tutorial:
+https://research.google.com/colaboratory/local-runtimes.html
+
+to allow google colab to access local hardware and files.
+Using google colab instead of jupyter notebook for autocomplete features.
