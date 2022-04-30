@@ -36,10 +36,10 @@ python -m ipykernel install --user --name=samc_venv
 
 ## Run jupyter notebook in Google Colab
 
-run the script:
+execute command:
 
 ```console
-jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --NotebookApp.port_retries=0 --port=8888
+jupyter notebook --NotebookApp.allow_origin=https://colab.research.google.com --NotebookApp.port_retries=0 --port=8888 --no-browser
 ```
 
-copy the link in the terminal and paste it into google colab -> connect -> connect to a local runtime
+copy the link from the terminal and paste it into Google Colab -> Connect -> Connect to a local runtime
