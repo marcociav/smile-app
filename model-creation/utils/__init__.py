@@ -1,17 +1,16 @@
 import numpy as np
 
-def train_test_split(arr, split, seed=0):
+def train_test_split(arr: list, split: float, seed : int = 0):
     np.random.seed(seed)
 
-    arr_test = np.array(arr)
-    n = arr_test.size
+    arr_test = arr
+    n = len(arr_test)
     n_train = int(n*split)
 
-    arr_train = np.zeros(n_train)
+    arr_train = []
     for i in range(n_train):
         random_index = np.random.randint(0, len(arr_test))
-        arr_train[i] = arr_test[random_index]
-        arr_test = np.delete(arr_test, random_index)
+        arr_train.append(arr_test.pop(random_index))
     
     return arr_train, arr_test
 
