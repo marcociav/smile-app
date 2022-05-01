@@ -43,3 +43,16 @@ jupyter notebook --NotebookApp.allow_origin=https://colab.research.google.com --
 ```
 
 copy the link from the terminal and paste it into Google Colab -> Connect -> Connect to a local runtime
+
+## ETL
+
+run the etl.py script
+
+```console
+python etl.py
+```
+
+to create 2 new folders, containing smiling faces and non smiling faces
+
+/data/transformed/smile
+/data/transformed/non_smile
