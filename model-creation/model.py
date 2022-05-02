@@ -180,7 +180,7 @@ def get_discriminator(
     x = layers.LeakyReLU(0.2)(x)
 
     num_filters = filters
-    for num_downsample_block in range(3):
+    for num_downsample_block in range(num_downsampling):
         num_filters *= 2
         if num_downsample_block < 2:
             x = downsample(
@@ -245,7 +245,7 @@ class CycleGan(keras.Model):
         self.identity_loss_fn = keras.losses.MeanAbsoluteError()
 
     def train_step(self, batch_data):
-        # x is Horse and y is zebra
+        # x is non smile and y is smile
         real_x, real_y = batch_data
 
         # For CycleGAN, we need to calculate different
@@ -264,14 +264,14 @@ class CycleGan(keras.Model):
         # 9. Return the losses in a dictionary
 
         with tf.GradientTape(persistent=True) as tape:
-            # Horse to fake zebra
+            # non smile to fake smile
             fake_y = self.gen_G(real_x, training=True)
-            # Zebra to fake horse -> y2x
+            # smile to fake non smile -> y2x
             fake_x = self.gen_F(real_y, training=True)
 
-            # Cycle (Horse to fake zebra to fake horse): x -> y -> x
+            # Cycle (non smile to fake smile to fake non smile): x -> y -> x
             cycled_x = self.gen_F(fake_y, training=True)
-            # Cycle (Zebra to fake horse to fake zebra) y -> x -> y
+            # Cycle (smile to fake non smile to fake smile) y -> x -> y
             cycled_y = self.gen_G(fake_x, training=True)
 
             # Identity mapping
