@@ -1,6 +1,6 @@
 from glob import glob
 from pathlib import Path
-from shutil import copyfile
+from PIL import Image
 
 
 def get_image_names(img_directory, labels):
@@ -30,6 +30,8 @@ if __name__ == '__main__':
     non_smile_image_names = get_image_names(original_dir, non_smile_labels)
 
     for name in smile_image_names:
-        copyfile(f"{original_dir}/{name}", f"{new_smile_dir}/{name}")
+        im = Image.open(f"{original_dir}/{name}")
+        im.save(f"{new_smile_dir}/{name.replace('.ppm', '.jpg')}")
     for name in non_smile_image_names:
-        copyfile(f"{original_dir}/{name}", f"{new_non_smile_dir}/{name}")
+        im = Image.open(f"{original_dir}/{name}")
+        im.save(f"{new_non_smile_dir}/{name.replace('.ppm', '.jpg')}")

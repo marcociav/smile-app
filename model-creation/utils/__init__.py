@@ -1,20 +1,14 @@
-import numpy as np
-
-def train_test_split(arr: list, split: float, seed : int = 0):
-    np.random.seed(seed)
-
-    arr_test = arr.copy()
-    n = len(arr_test)
-    n_train = int(n*split)
-
-    arr_train = []
-    for _ in range(n_train):
-        random_index = np.random.randint(0, len(arr_test))
-        arr_train.append(arr_test.pop(random_index))
-    
-    return arr_train, arr_test
+import tensorflow as tf
 
 
-if __name__ == '__main__':
-    test1 = list(np.arange(2, 23))
-    train_test_split(test1, 0.8)
+def normalize_img(img):
+    img = tf.cast(img, dtype=tf.float32)
+    # Map values in the range [-1, 1]
+    return (img / 127.5) - 1.0
+
+
+# def preprocess_test_image(img, label):
+#     # Only resizing and normalization for the test images.
+#     img = tf.image.resize(img, [input_img_size[0], input_img_size[1]])
+#     img = normalize_img(img)
+#     return img
