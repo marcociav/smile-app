@@ -1,0 +1,8 @@
+Dockerfile
+
+__pycache__/
+
+/saa_venv
+/.idea
+
+/test

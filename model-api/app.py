@@ -16,12 +16,7 @@ app = FastAPI(
     title="Smile App API"
 )
 
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-    "http://marcociav.github.io/",
-    "https://marcociav.github.io/"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,11 +32,18 @@ async def home():
     return {"data": "This is the Smile App API"}
 
 
+@app.post('/detect-faces')
+async def detect_faces(
+    imageFile: UploadFile = File(...),
+):
+    # TODO: api that scans image and detects faces. For each detected face call /smile to generate a smile
+    # this will be the api called by the frontend
+    # handle original position and resizing to 64x64 here
+    return {"data": "temp"}
+
 @app.post('/smile')
 async def smile(
-        imageFile: UploadFile = File(...),
-        originalWidth: int = Form(...),
-        originalHeight: int = Form(...),
+        imageFile: UploadFile = File(...)
 ):
     img = Image.open(imageFile.file)
     img = np.array(img)
@@ -54,7 +56,6 @@ async def smile(
     img = img[0].numpy()
     img = denormalize_img(img)
     img = Image.fromarray(img)
-    img = img.resize((originalWidth, originalHeight))
 
     img_response = io.BytesIO()
     img.save(img_response, format="JPEG")
@@ -64,4 +65,7 @@ async def smile(
 
 
 if __name__ == '__main__':
-    uvicorn.run(app)
+    log_config = uvicorn.config.LOGGING_CONFIG
+    log_config["formatters"]["access"]["fmt"] = "%(asctime)s - %(levelname)s - %(message)s"
+    log_config["formatters"]["default"]["fmt"] = "%(asctime)s - %(levelname)s - %(message)s"
+    uvicorn.run(app, host='0.0.0.0', port=8080, log_config=log_config)
